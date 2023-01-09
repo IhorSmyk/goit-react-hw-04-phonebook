@@ -1,0 +1,15 @@
+.contactListTable {
+  width: 50%;
+  margin-top: 10px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.thead {
+  height: 55px;
+}
+
+.message {
+  margin-top: 10px;
+}
