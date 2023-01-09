@@ -1,62 +1,65 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import s from './ContactForm.module.css';
 
-class ContactForm extends Component {
-  state = {
-    name: '',
-    number: '',
+export const ContactForm = ({ sendData }) => {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+
+  const handleChangeData = e => {
+    console.log(e.target.name);
+    switch (e.target.name) {
+      case 'name':
+        setName(e.target.value);
+        break;
+      case 'number':
+        setNumber(e.target.value);
+        break;
+      default:
+    }
   };
 
-  handleChangeData = e => {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
-  };
-
-  submitData = e => {
+  const submitData = e => {
     e.preventDefault();
-    this.props.sendData(this.state.name, this.state.number);
-    this.setState({ name: '', number: '' });
+    sendData(name, number);
+    setName('');
+    setNumber('');
   };
 
-  render() {
-    return (
-      <>
-        <form className={s.form} action="submit" onSubmit={this.submitData}>
-          <label htmlFor="name">Name</label>
-          <input
-            id="name"
-            type="text"
-            name="name"
-            placeholder="Enter a name"
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-            onChange={this.handleChangeData}
-            value={this.state.name}
-          />
+  return (
+    <>
+      <form className={s.form} action="submit" onSubmit={submitData}>
+        <label htmlFor="name">Name</label>
+        <input
+          id="name"
+          type="text"
+          name="name"
+          placeholder="Enter a name"
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          required
+          onChange={handleChangeData}
+          value={name}
+        />
 
-          <label htmlFor="number">Number</label>
-          <input
-            id="number"
-            type="text"
-            name="number"
-            placeholder="Enter a number"
-            pattern="^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$"
-            title="This field may contain numbers"
-            required
-            onChange={this.handleChangeData}
-            value={this.state.number}
-          />
-          <button type="submit">Add contact to the list</button>
-        </form>
-      </>
-    );
-  }
-}
+        <label htmlFor="number">Number</label>
+        <input
+          id="number"
+          type="text"
+          name="number"
+          placeholder="Enter a number"
+          pattern="^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$"
+          title="This field may contain numbers"
+          required
+          onChange={handleChangeData}
+          value={number}
+        />
+        <button type="submit">Add contact to the list</button>
+      </form>
+    </>
+  );
+};
 
 ContactForm.propTypes = {
   sendData: PropTypes.func.isRequired,
 };
-
-export default ContactForm;
