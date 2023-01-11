@@ -7,7 +7,6 @@ export const ContactForm = ({ sendData }) => {
   const [number, setNumber] = useState('');
 
   const handleChangeData = e => {
-    console.log(e.target.name);
     switch (e.target.name) {
       case 'name':
         setName(e.target.value);
